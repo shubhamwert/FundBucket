@@ -1,0 +1,87 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %}
+<title>FundBucket | Post Detail</title>
+<link rel="stylesheet" href="{% static 'projects/css/post_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="flexcon">
+    <img id="logo" src="{% static 'projects/img/fundbuccket.png' %}">
+    <div style="flex: 1;"></div>
+    <div class="lnametop">FundBucket</div>
+</div>
+
+
+<div class="flexcon">
+    <img class="titleimg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA4yQ2-CzEbEi9R6X5fotKMKIJyzAJGyBJORtw8hveiRcWbWeX" alt="">
+</div>
+
+<div class="flexcon">
+    <div class="fundcon">
+      <div class="fdet">
+        <a href='{% url 'accounts:profile' username=post.author %}' style="font-weight: bold;">@{{ post.author }}</a>
+        <div style="flex:1"></div>
+        <div>{{ post.published_date|date }}</div>
+      </div>
+      <div class="progressbar">
+        <div id="prog" class="done"></div>
+      </div>
+      <div class="fdet" style="padding-top: 5px;">
+        <div>INR</div>
+        <div id="howmuch">{{ post.funds }}</div>
+        <div>&nbsp out of INR </div>
+        <div>INR</div>
+        <div id="tf" style="font-weight: bold;">{{ post.total_funds }}</div>
+        <div>&nbsp raised</div>
+      </div>
+      <div class="funddesc">
+        <span class="title">{{ post.title }}</span><br><br>
+        <span class="cat">Category: {{ post.category }}</span><br><br><br>
+        {{ post.description }}
+      </div>
+{% if user.is_authenticated  %}
+{% if user.username != post.author.username %}
+      <div class="contri">
+        <div class="conttext">CONTRIBUTE</div>
+        <form action="{% url 'projects:add_funds' pk=post.pk %}" method="post">
+          {{ add_funds_form.as_p }}
+          {{ add_comment_form.as_p }}
+          {% csrf_token %}
+          <button class="donb">DONATE</button>
+        </form>
+      </div>
+      {% endif %}
+{% endif %}
+<h4>Comments</h4>
+{% for comment in post.comments.all %}
+    <h5>{{comment.author}}</h5>
+    <p>{{ comment.text }}</p>
+    {% empty %}
+    <p>No Comments!</p>
+{% endfor %}
+    </div>
+
+  </div>
+
+
+<!-- {% if user.is_authenticated %}
+    <form action="{% url 'projects:add_funds' pk=post.pk %}" method="post">
+        {{ add_funds_form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value="Submit">
+    </form>
+{% endif %} -->
+
+
+
+
+
+<script defer>
+    window.onload = function(){
+      var hm = document.getElementById('howmuch').innerHTML.trim();
+      var ht = document.getElementById('tf').innerHTML.trim();
+      var hm = document.getElementById('prog').style.width = hm*100/ht+'%';
+    }
+  </script>
+{% endblock %}

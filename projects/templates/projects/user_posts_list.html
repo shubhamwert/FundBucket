@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Fund Bucket | User Posts</title>
+{% endblock %}
+{% block content %}
+    {% for post in post_list %}
+        <h2><a href="{% url 'projects:post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+        <p>{{ post.description }}</p>
+        {% empty %}
+        <p>No Posts Yet</p>
+    {% endfor %}
+{% endblock %}

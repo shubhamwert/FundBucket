@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>FundBucket | Profile</title>
+<link rel="stylesheet" href="{% static 'accounts/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+        
+    <div class="flexcon">
+        <div class="flexcon f2" style="width: 100%;max-width: 700px;">
+            {% with '/media/'|add:profile_user.personal.profile_pic.name as src %}
+            <img class='titleimg' src='{{src}}'>
+            {% endwith %}
+
+        
+          <div style="flex: 1;"></div>
+          <div style="margin: auto;">
+            <div style="font-weight: bold;">{{  profile_user.get_full_name }}</div><br>
+            <div>{{ profile_user.email }}</div><br>
+            <div>{{ profile_user.personal.mobile_number }}</div><Br>
+            </div>
+          </div>
+    </div>
+    
+    <div class="flexcon">
+      <div class="fundcon">
+        <div class="funddesc">
+          <span class="cat">Address:</span><br><br>
+          {{ profile_user.personal.address }}
+          <br><br><br><br>
+          <span class="cat">City:</span><br><br>
+          {{ profile_user.personal.city }}<br><br><br><br>
+          <span class="cat">State:</span><br><br>
+          {{ profile_user.personal.state }}<br><br><br><br>
+          <span class="cat">Account number:</span><br><br>
+          {{ profile_user.personal.account_number }}<br><br><br><br>
+          <span class="cat">IFSC:</span><br><br>
+          {{ profile_user.personal.bank_ifsc }}<br><br><br><br>
+        </div>
+        
+      </div>
+      
+    </div>
+
+{% endblock %}

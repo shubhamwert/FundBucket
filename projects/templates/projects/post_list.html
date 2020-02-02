@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>FundBucket</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'projects/css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="flexcon">
+        <img id="logo" src="{% static 'projects/img/fundbuccket.png' %}">
+    </div>
+    <div class="flexcon lname">
+        FundBucket
+    </div>
+
+    <div class="flexcon">
+        <div class="rescon">
+            
+            {% for post in post_list %}
+            <a href="{% url 'projects:post_detail' pk=post.pk %}" class="res">
+                <div class="reschild">
+                  <div class="resphoto">
+                      {% if post.picture %}
+                        {% with "/media/"|add:post.picture.name as src %}
+                        <img src='{{ src }}'>
+                        {% endwith %}
+                    {% endif %}
+                  </div>
+                  <div class="fundescrip">{{ post.title }}</div>
+                  <div class="moredes">{{ post.description }}</div>
+                </div>
+              </a>
+
+              {% empty %}
+                <p>No posts yet</p>
+            {% endfor %}
+
+        </div>
+    </div>
+
+      
+
+    
+
+{% endblock %}
+
+
+
+
+<a href='{% url "projects:post_detail" pk=post.pk %}'>{{ post.title }}</a>
