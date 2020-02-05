@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    {% block title %}
+    {% endblock %}
+</head>
+<body>
+    <nav>
+        <a href="{% url 'projects:post_list' %}" class="navbar-brand"><img src="{% static 'img/fundbuccket.png' %}">FundBucket</a>
+        <ul class="nav-left-list">
+            <li><a href="{% url 'projects:post_create' %}">Start a Fund Raiser!</a></li>
+        </ul>
+        <ul style="margin-left: auto;">
+            {% if user.is_authenticated %}
+                <li><a href="" style="margin-top: 15px">Notifications</a></li>
+                <li><a href="{% url 'projects:user_posts' %}" style="margin-top: 15px">Your Fund Raisers</a></li>
+
+                <!--  url 'projects:profile' pk=user.pk  -->
+                {% if user.personal %}
+                {% with '/media/'|add:user.personal.profile_pic.name as src %}
+                <li><a class ='welcome' href="{% url 'accounts:profile' username=user.username %}"><img src='{{src}}'>
+                {% endwith %}
+                {% else %}
+                <li><a class="welcome" href=""><img src='/media/profile_pic/user_default.png'>
+                {% endif %}
+                @{{ user.username }}</a></li>
+                <li><a style="margin-top: 15px;" href="{% url 'accounts:logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                <li><a href="{% url 'accounts:signup' %}">Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

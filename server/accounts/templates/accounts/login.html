@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>FundBucket | Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'accounts/login.css' %}">
+{% endblock %}
+{% block content %}
+    <div id="login-box">
+        <h1>Login</h1>
+        <form method="POST">
+            {{form.as_p}}
+            {% csrf_token %}
+            <input type="submit" class="button" value="Submit">
+        </form>
+        <hr>
+        <a href="{% url 'accounts:signup' %}">Didn't Register? Register Here.</a>
+    </div>
+{% endblock %}
