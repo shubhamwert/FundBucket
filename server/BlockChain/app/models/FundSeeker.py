@@ -20,5 +20,7 @@ class FundSeeker:
         
     def addContractAddress(string):
         self.FunderContract=string
+    def setContractAcc(self,Acc):
+        self._account=Acc
     def __repr__(self):
         return self._name

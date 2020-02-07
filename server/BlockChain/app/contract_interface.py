@@ -1,4 +1,4 @@
-from models import FundSeeker,Funder
+from app.models import FundSeeker,Funder
 import json
 from web3 import HTTPProvider,Web3
 #links for connections
