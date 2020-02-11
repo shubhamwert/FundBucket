@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="name_ndescription_naddress">name description address</string>
 </resources>
