@@ -17,7 +17,7 @@ def CreateFundSeeker(name:str,acc):
 
 
 #read compiled json file for abi and byte code
-def readContractInfo(filename):
+def readContractInfo(filename=r'compiled\contracts\contract.json'):
     with open(filename,'r') as f:
         p=json.load(f)   
     return p

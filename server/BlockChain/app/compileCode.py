@@ -3,7 +3,7 @@ import json
 
 #Compiles code for addresses at files
 if __name__ == "__main__":
-    files=[r'contracts\funder.sol',r'contracts\fundi.sol']
+    files=[r'contracts\contract.sol']
 
 
     # compiledFiles=myCompiler.compileContracts(files)
@@ -15,5 +15,5 @@ if __name__ == "__main__":
     for file in files:
         compiled=myCompiler.compileContracts([file])
         print("compiled file ",file)
-        with open(r'compiled\{}'.format(file),'w') as f:
+        with open(r'compiled\{}'.format(file).replace('.sol','.json'),'w') as f:
             json.dump(compiled,f)
