@@ -1,5 +1,6 @@
 package com.stechapps.myapplication.Adapters
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -38,6 +39,8 @@ class CampaignListAdapter(private val mContext:Context,private val Dataset:Array
             val intent= Intent(mContext,FundSeekerListActivity::class.java)
             intent.putExtra("Campaign",Dataset.get(position).CampaignName)
             intent.putExtra("addressFundSeeker",Dataset.get(position).address)
+
+
             startActivity(mContext,intent, Bundle.EMPTY)
         }
 

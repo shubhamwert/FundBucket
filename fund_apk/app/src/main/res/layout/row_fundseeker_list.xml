@@ -6,13 +6,19 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:outlineAmbientShadowColor="@color/cardview_dark_background">
+    android:minHeight="66dp"
+    android:elevation="@dimen/cardview_default_elevation"
+    app:layout_insetEdge="right"
+    android:background="#AAA"
+    app:cardCornerRadius="12dp"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?android:attr/colorPrimary"
+        android:minWidth="200dp"
+        android:minHeight="230dp"
         android:padding="16dp">
 
 
@@ -21,7 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="52dp"
             android:layout_marginEnd="16dp"
+
             android:text="FundSeekerName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,13 +40,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="4dp"
             android:paddingBottom="23dp"
             android:text="address x0hhh"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.202"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_fundSeeker_name" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

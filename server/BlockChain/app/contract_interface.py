@@ -55,7 +55,7 @@ def registerFunder(contract,funder:Funder.Funder):
         print("error no contract address specified")
         return
     name=funder.getName()
-    tx_hash=contract.functions.register(name).transact({'from':funder.getAcc(),'to':contract.address,'gas':100000})
+    tx_hash=contract.functions.registerAsFunder().transact({'from':funder.getAcc(),'to':contract.address,'gas':100000})
     tx_receipt=web3.eth.waitForTransactionReceipt(tx_hash)
     print('register new Funder')
 
@@ -64,21 +64,21 @@ def registerFunder(contract,funder:Funder.Funder):
 #get account number of Fund Seeker by passing contract.
 #basically returns the owner of contract Fundi
 def getFundSeeker(contract,fundSeeker:FundSeeker.FundSeeker):
-    return contract.functions.FundSeeker().call
+    return contract.functions.fundseeker().call()
 
 
 #Register The Fund Seeker using this function
 #passing contract and fund Seeker
 #this donot create a seprate contract but register fund seeker in contract's address as fundWanter
 #need transfer monety
-def registerFundSeeker(contract,funder:Funder.Funder,fund_seeker:FundSeeker.FundSeeker):
-    if not web3.isConnected():
-        print('Not connected to blockchain')
-        return
-    tx_hash=contract.functions.registerFundi(fund_seeker.getAcc()).transact({'from':funder.getAcc(),'to':contract.address,'gas':100000})
-    tx_receipt=web3.eth.waitForTransactionReceipt(tx_hash)
-    print('register new fundSeeker')
-    return [tx_receipt,tx_hash]
+# def registerFundSeeker(contract,funder:Funder.Funder,fund_seeker:FundSeeker.FundSeeker):
+#     if not web3.isConnected():
+#         print('Not connected to blockchain')
+#         return
+#     tx_hash=contract.functions.registerFundi(fund_seeker.getAcc()).transact({'from':funder.getAcc(),'to':contract.address,'gas':100000})
+#     tx_receipt=web3.eth.waitForTransactionReceipt(tx_hash)
+#     print('register new fundSeeker')
+#     return [tx_receipt,tx_hash]
 
 #returns availabe functions for a contract
 def getAllFunctionList(contract_name):
@@ -86,51 +86,50 @@ def getAllFunctionList(contract_name):
 
 #send money to FundSeeker from funder account.
 #both should be registered
-def sendMoneyToFundSeeker(contract,from_funder:Funder.Funder,to_fund_seeker:FundSeeker.FundSeeker):
+def DonateMoney(contract,from_funder:Funder.Funder,to_fund_seeker:FundSeeker.FundSeeker,value=0):
     if not web3.isConnected():
         print('Not connected to blockchain')
         return
-    tx_hash=contract.functions.sendFunds(to_fund_seeker.getAcc()).transact({'from':from_funder.getAcc(),'to':contract.address,'gas':100000})
+    tx_hash=contract.functions.donateFunds().transact({'from':from_funder.getAcc(),'to':contract.address,'gas':100000,'value':value})
     tx_receipt=web3.eth.waitForTransactionReceipt(tx_hash)
     print('Money Send to Fund_Seeker')
     return [tx_receipt,tx_hash]
 
-#TODO:check function error. opcode not found
-#repair code in contract
-def getCollectedMoney(contract,fund_seeker:FundSeeker.FundSeeker):
-    if not web3.isConnected():
-        print('Not connected to blockchain')
-        return
-    tx_hash=contract.functions.getCollectedMoney().transact({'from':fund_seeker.getAcc(),'to':contract.address})
-    print('Collected Money {}'.format(tx_hash))
-    return tx_hash
+# #TODO:check function error. opcode not found
+# #repair code in contract
+# def getCollectedMoney(contract,fund_seeker:FundSeeker.FundSeeker):
+#     if not web3.isConnected():
+#         print('Not connected to blockchain')
+#         return
+#     tx_hash=contract.functions.getCollectedMoney().transact({'from':fund_seeker.getAcc(),'to':contract.address})
+#     print('Collected Money {}'.format(tx_hash))
+#     return tx_hash
 
 #starts withdrawal process or voting process
 def startVotingFor(contract,initator_address,fund_seeker:FundSeeker.FundSeeker):
-    tx=contract.functions.initateWithdrawal(fund_seeker.getAcc()).transact({'from':initator_address})
+    tx=contract.functions.initVote().transact({'from':initator_address})
 
 #ends voting process
 def endVotingFor(contract,stoper_address,fund_seeker:FundSeeker.FundSeeker):
-    tx=contract.functions.endWithdrawal(fund_seeker.getAcc()).transact({'from':initator_address})
+    tx=contract.functions.endVoting(fund_seeker.getAcc()).transact({'from':initator_address})
 
 #vote for a particular fund Seeker. vote can be FAVOUR or AGAINST
 def voteFor(contract,for_fund_seeker,voter:Funder.Funder,vote:str):
     votes={'FAVOUR':1,'AGAINST':0}  
     try:
-        tx=contract.functions.vote(for_fund_seeker.getAcc(),votes[vote.capitalize()]).transact({'from':voter.getAcc()})
-    except e:
+        tx=contract.functions.vote(votes[vote.capitalize()]).transact({'from':voter.getAcc()})
+    except Exception:
         print("error says\n")
-        prit(e)
 
 #when voting is done count the votes and compare with threshold (2).return true of votes greater than 2
 def isAllowedToWithDraw(contract,quering,fund_seeker:FundSeeker.FundSeeker):
-    tx=contract.functions.isAllowedToWithDraw(fund_seeker.getAcc()).call({'from':quering.getAcc()})
+    tx=contract.functions.withDraw().call({'from':quering.getAcc()})
     print(tx)
     return tx
 
 #returns current funding stage for fund seeker
-def getCurrentFundingStageFor(contract,quering,fund_seeker:FundSeeker.FundSeeker):
-    tx=contract.functions.getStage(fund_seeker.getAcc()).call({'from':quering.getAcc()})
+def getCurrentFundingStageFor(contract,quering):
+    tx=contract.functions.stage().call({'from':quering.getAcc()})
     print(tx)
     Stages={0:"Init",1:"Vote",2:"Done"}
     return tx

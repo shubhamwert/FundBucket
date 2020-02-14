@@ -2,6 +2,9 @@ package com.stechapps.myapplication.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Explode
+import android.view.View
+import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.stechapps.myapplication.Adapters.FundSeekerListAdapter
@@ -17,6 +20,14 @@ class FundSeekerListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fund_seeker_list)
+        // inside your activity (if you did not enable transitions in your theme)
+        with(window) {
+            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+
+            // set an exit transition
+            exitTransition = Explode()
+        }
+
         CampName= intent.extras?.get("Campaign").toString()
         CampAddress= intent.extras?.get("addressFundSeeker").toString()
         tv_FundSeekerList_campaign.text=CampName
@@ -34,5 +45,9 @@ class FundSeekerListActivity : AppCompatActivity() {
 
 
 
+    }
+
+    fun img_profile_goBack(view: View) {
+        onBackPressed()
     }
 }

@@ -6,15 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".Activities.FundSeekerListActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
     <TextView
         android:id="@+id/tv_FundSeekerList_campaign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:text="FUND BUCKET"
         android:textAllCaps="true"
         android:textAppearance="?android:textAppearanceLarge"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,17 +31,37 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="by FundBucket"
         app:layout_constraintStart_toEndOf="@+id/tv_FundSeekerList_campaign"
         app:layout_constraintTop_toBottomOf="@+id/tv_FundSeekerList_campaign" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_fundSeeker_List"
-        android:layout_width="409dp"
-        android:layout_height="632dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="60dp"
+        app:cardCornerRadius="55dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="false"
+        app:layout_constraintEnd_toStartOf="@+id/tv_FundSeekerList_campaign"
+        app:layout_constraintTop_toTopOf="@+id/tv_FundSeekerList_campaign"
+        android:onClick="img_profile_goBack">
+
+        <ImageView
+            android:id="@+id/img_fundseeker_profile_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_img" />
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

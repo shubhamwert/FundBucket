@@ -4,9 +4,9 @@ from flask import request
 import json
 web3=ci.web3
 
-FunderContract=ci.readContractInfo(r'app\compiled\contracts\funder.json')
-FundSeekerContract=ci.readContractInfo(r'app\compiled\contracts\fundi.json')
-
+Contract=ci.readContractInfo(r'app\compiled\contracts\contract.json')
+FunderContract=Contract
+FundSeekerContract=Contract
 #test samples
 owner=''
 Funder=''
@@ -20,25 +20,25 @@ contract_FundSeeker=''
 def connectivity():
     return str(web3.isConnected())
 
-@app.route('/openFundBucket',methods=['POST'])
-def CreateNewBucket():
-    try:
-        name=request.json['name']
-        account=request.json['account']
-        owner=ci.CreateFunder(name,acc=account)
-        contract_Funder=ci.createContract(FunderContract,'Funders',owner.getAcc())
-        return json.dumps({'response':True})
-    except :
-        return json.dumps({'response':False})
+# @app.route('/openFundBucket',methods=['POST'])
+# def CreateNewBucket():
+#     try:
+#         name=request.json['name']
+#         account=request.json['account']
+#         owner=ci.CreateFunder(name,acc=account)
+#         contract_Funder=ci.createContract(FunderContract,'Funders',owner.getAcc())
+#         return json.dumps({'response':True})
+#     except :
+#         return json.dumps({'response':False})
         
 
-@app.route('/registerAsFundSeeker',methods=['POST'])
+@app.route('/registerCampaign',methods=['POST'])
 def CreateNewFundSeeker():
     try:
         name=request.json['name']
         account=request.json['account']
         FundSeeker=ci.CreateFundSeeker(name,acc=account)
-        contract_FundSeeker=ci.createContract(FundSeekerContract,'Fundi',FundSeeker.getAcc(),FundSeeker.getName())
+        contract_FundSeeker=ci.createContract(FundSeekerContract,'Campaign',FundSeeker.getAcc())
         FundSeeker.setContractAcc(contract_FundSeeker)
         return json.dumps({'response':True})
     except :
