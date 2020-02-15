@@ -1,4 +1,4 @@
-from app.models import FundSeeker,Funder
+from BlockChain.models import FundSeeker,Funder
 import json
 from web3 import HTTPProvider,Web3
 #links for connections
@@ -51,9 +51,9 @@ def createContract(jsonFile,contract_name,account,consArg=[]):
 #Register The Funders using this function
 #passing contract and funder
 def registerFunder(contract,funder:Funder.Funder):
-    if not web3.isAddress(contract.address) or not web3.isConnected():
-        print("error no contract address specified")
-        return
+    # if not web3.isAddress(contract.address) or not web3.isConnected():
+    #     print("error no contract address specified")
+    #     return
     name=funder.getName()
     tx_hash=contract.functions.registerAsFunder().transact({'from':funder.getAcc(),'to':contract.address,'gas':100000})
     tx_receipt=web3.eth.waitForTransactionReceipt(tx_hash)
@@ -86,7 +86,7 @@ def getAllFunctionList(contract_name):
 
 #send money to FundSeeker from funder account.
 #both should be registered
-def DonateMoney(contract,from_funder:Funder.Funder,to_fund_seeker:FundSeeker.FundSeeker,value=0):
+def DonateMoney(contract,from_funder:Funder.Funder,value=0):
     if not web3.isConnected():
         print('Not connected to blockchain')
         return

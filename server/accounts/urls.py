@@ -23,5 +23,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='accounts/login.html', success_url = reverse_lazy('accounts:personal_info')), name='login'),
     path('logout/', LogoutView.as_view(), name = 'logout'),
     path('personal_info/', views.PersonalInfoView.as_view(), name='personal_info'),
-    path('profile/<username>/', views.profile_view, name='profile')
+    path('profile/<username>/', views.profile_view, name='profile'),
+    path('users/', views.usersView, name='api')
 ]

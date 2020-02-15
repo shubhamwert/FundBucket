@@ -7,7 +7,7 @@ class PersonalInfo(models.Model):
     address = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=50,blank=True)
     state = models.CharField(max_length=20, blank=True)
-    account_number = models.IntegerField(null=True)
+    account_number = models.CharField(max_length=256,null=True)
     bank_ifsc = models.CharField(verbose_name='Bank IFSC Code', max_length=30, blank=True)   
     profile_pic = models.ImageField(default='profile_pic/user_default.png', upload_to='profile_pic/') 
     # registered = models.BooleanField(default=False)

@@ -6,6 +6,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from . import models
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+
+from django.core import serializers
+from django.http import JsonResponse
 # Create your views here.
 
 class SignUp(CreateView):
@@ -34,12 +38,14 @@ class PersonalInfoView(LoginRequiredMixin, CreateView):
             model.user = request.user
             model.save()
             return redirect('projects:post_list')
-    # def form_valid(self, form):
-    #     form.instance.user = self.request.user
-    #     form.instance.profile_pic = self.request.FILES.getlist('profile_pic')
-    #     print(form.instance.profile_pic)
-    #     # return super().form_valid(form)
 
 def profile_view(request, username):
     profile_user = get_object_or_404(User, username=username)
     return render(request, 'accounts/profile.html', context={'profile_user':profile_user})
+
+@csrf_exempt
+def usersView(request):
+    data = serializers.serialize('json', User.objects.all(), fields=('username'))
+    for obj in serializers.deserialize('json', data):
+        print(obj.object.username)
+    return JsonResponse(data, safe=False)

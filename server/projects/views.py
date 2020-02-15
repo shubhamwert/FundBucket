@@ -1,12 +1,27 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
+from django.http import HttpResponse
 from . import forms, models
 from django.views.generic import (TemplateView, CreateView, ListView, UpdateView, 
                                     DetailView, DeleteView, FormView)
+from django.http import JsonResponse
+from django.core import serializers
+import json
+from BlockChain.contract_interface import web3 
+from BlockChain import contract_interface as ci
 # Create your views here.
 
+
+contractLocation=r'BlockChain\compiled\contracts\contract.json'
+ContractDetail=ci.readContractInfo(contractLocation)
+#remove Ones Database Implemented
+#Tempory Variables
+Contract='temp'
+Funder='funder'
+fundSeeker='FundSeeker'
 class PostListView(ListView):
     model = models.Post
     def get_queryset(self):
@@ -90,3 +105,75 @@ def add_funds_view(request, pk):
             model.author = request.user
             model.save()
             return redirect('projects:post_detail', pk=pk)
+
+
+# TODO
+@csrf_exempt
+def checkconnectivity(request):
+    return JsonResponse({"response":web3.isConnected()})
+@csrf_exempt
+def CreateCampaign(request):
+    js = request.read()
+    js = json.loads(js)
+    name = js['name']
+    account = js['account']
+    global fundSeeker
+    fundSeeker = ci.CreateFundSeeker(name, account)
+    #TODO ADD Contract ID returned below to database and make code to recover it
+    global Contract
+    Contract=ci.createContract(ContractDetail,"Campaign",fundSeeker.getAcc())
+    return JsonResponse({'response':True})
+@csrf_exempt
+def CreateFunderForBucket(request):
+    js = request.read()
+    js = json.loads(js)
+    name = js['name']
+    account = js['account']
+    global Funder 
+    Funder = ci.CreateFunder(name,acc=account)
+    print(Funder.getAcc())
+    print(Contract)
+    user=ci.registerFunder(Contract,Funder)
+    return JsonResponse({'response':True})
+
+@csrf_exempt
+def registerFundSeeker(request):
+    tx=ci.registerFundSeeker(Contract,funder=Funder,fund_seeker=fundSeeker)
+    return JsonResponse({'response':True,'description':str(tx)})
+
+@csrf_exempt
+def getFundSeeker(request):
+    tx=ci.getFundSeeker(Contract,fundSeeker)
+    return JsonResponse({'response':True,'description':str(tx)})
+
+@csrf_exempt
+def sendMoneyToFundSeeker(request):
+    [tx,val]=ci.DonateMoney(Contract,Funder,'10000')
+    return JsonResponse({'response':True,'tx':str(tx),'val':val})
+
+@csrf_exempt
+def startVotingFor(request):
+    ci.startVotingFor(Contract,Funder.getAcc(),fundSeeker.getAcc())
+    return JsonResponse({'response':True})
+
+@csrf_exempt
+def endVotingFor(request):
+    ci.endVotingFor(Contract,Funder.getAcc(),fundSeeker.getAcc())
+    return JsonResponse({'response':True})
+
+@csrf_exempt
+def vote(request):
+    vote=request.read()
+    js = json.loads(js)
+    vote = js['vote']
+    ci.voteFor(Contract,fundSeeker,Funder,vote)
+
+@csrf_exempt
+def isAllowedToWithDraw(request):
+    p=ci.isAllowedToWithDraw(Contract,fundSeeker,fundSeeker)
+    return JsonResponse({'response':True,'body':str(p)})
+
+@csrf_exempt
+def getCurrentFundingStageFor(request):
+    p=ci.getCurrentFundingStageFor(Contract,Funder,fundSeeker)
+    return p
