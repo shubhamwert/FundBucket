@@ -1,4 +1,4 @@
-from BlockChain.models import FundSeeker,Funder
+from app.models import FundSeeker,Funder
 import json
 from web3 import HTTPProvider,Web3
 #links for connections
@@ -122,7 +122,7 @@ def voteFor(contract,for_fund_seeker,voter:Funder.Funder,vote:str):
         print("error says\n")
 
 #when voting is done count the votes and compare with threshold (2).return true of votes greater than 2
-def isAllowedToWithDraw(contract,quering,fund_seeker:FundSeeker.FundSeeker):
+def isAllowedToWithDraw(contract,quering):
     tx=contract.functions.withDraw().call({'from':quering.getAcc()})
     print(tx)
     return tx
@@ -133,3 +133,10 @@ def getCurrentFundingStageFor(contract,quering):
     print(tx)
     Stages={0:"Init",1:"Vote",2:"Done"}
     return tx
+
+def retreiveContract(ContractAddress,abi):
+    contract = web3.eth.contract(
+        address=ContractAddress,
+        abi=abi,
+            )
+    return contract
