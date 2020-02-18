@@ -1,14 +1,18 @@
 package com.stechapps.myapplication.Activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Explode
+import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
 import com.stechapps.myapplication.Adapters.FundSeekerListAdapter
 import com.stechapps.myapplication.R
+import com.stechapps.myapplication.models.CampaignsRvModel
 import com.stechapps.myapplication.models.FundSeekerRvModel
 import kotlinx.android.synthetic.main.activity_fund_seeker_list.*
 
@@ -17,32 +21,45 @@ class FundSeekerListActivity : AppCompatActivity() {
     lateinit var CampAddress:String
     lateinit var FundSeekerAdap:FundSeekerListAdapter
     lateinit var Dataset:ArrayList<FundSeekerRvModel>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fund_seeker_list)
         // inside your activity (if you did not enable transitions in your theme)
-        with(window) {
-            requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-
-            // set an exit transition
-            exitTransition = Explode()
-        }
-
+        val db=FirebaseFirestore.getInstance()
         CampName= intent.extras?.get("Campaign").toString()
-        CampAddress= intent.extras?.get("addressFundSeeker").toString()
+        CampAddress= intent.extras?.get("accountFunderCurrent").toString()
         tv_FundSeekerList_campaign.text=CampName
         Dataset= ArrayList()
 
-        Dataset.add(FundSeekerRvModel("hello","0xh2hhee2hhqh21"))
-        Dataset.add(FundSeekerRvModel("hello","0xh2hhee2hhqh21"))
-        Dataset.add(FundSeekerRvModel("hello","0xh2hhee2hhqh21"))
 
 
 
         val lay=StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         rv_fundSeeker_List.layoutManager=lay
-        rv_fundSeeker_List.adapter=FundSeekerListAdapter(this,Dataset)
+        FundSeekerAdap=FundSeekerListAdapter(this,Dataset)
+        rv_fundSeeker_List.adapter=FundSeekerAdap
 
+        db.collection("CampaignList").addSnapshotListener { querySnapshot, exception ->
+            if (exception!=null){
+
+                Log.d("<<<<<<<<<<<Firebase at Profile>>>>>>>>>",exception.toString())
+            }
+            else{
+                if (querySnapshot != null) {
+                    Dataset.removeAll(Dataset)
+                    for(i in querySnapshot.documents){
+                        Dataset.add(FundSeekerRvModel(i.data?.get("name").toString(),i.data?.get("address").toString()))
+
+
+                    }
+                    FundSeekerAdap.notifyDataSetChanged()
+                }
+            }
+
+
+
+        }
 
 
     }
@@ -50,4 +67,11 @@ class FundSeekerListActivity : AppCompatActivity() {
     fun img_profile_goBack(view: View) {
         onBackPressed()
     }
+
+    fun addFundSeekerCampaign(view: View) {
+        val int=Intent(this,AddCampaignActivity::class.java)
+        int.putExtra("account_name",CampAddress)
+        startActivity(int)
+    }
+
 }

@@ -41,7 +41,7 @@ class FundSeekerListAdapter(private val mContext:Context,private val Dataset:Arr
         holder.itemView.setOnClickListener {
             val intent= Intent(mContext,FundingActivity::class.java)
             intent.putExtra("Campaign",Dataset.get(position).FundSeeker)
-            intent.putExtra("addressFundSeeker",Dataset.get(position).address)
+            intent.putExtra("accountFunderCurrent",Dataset.get(position).address)
             ContextCompat.startActivity(mContext, intent, Bundle.EMPTY)
         }
     }

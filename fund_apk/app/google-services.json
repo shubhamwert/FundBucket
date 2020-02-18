@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "767284597427",
+    "firebase_url": "https://fundbucket-b7937.firebaseio.com",
+    "project_id": "fundbucket-b7937",
+    "storage_bucket": "fundbucket-b7937.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767284597427:android:aefd94470378ae9c8356c6",
+        "android_client_info": {
+          "package_name": "com.stechapps.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767284597427-1ppnd838b8sonlnos33fnbqo8vtqfmn9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stechapps.myapplication",
+            "certificate_hash": "4c0ca96ca9bb606be04bc46e691337ab8c041bf3"
+          }
+        },
+        {
+          "client_id": "767284597427-ehauovrdbj6of5i9kohe85i36octooiq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnXf4syTo6fWTcsnc0k0u_CJN71Tfe-I4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767284597427-ehauovrdbj6of5i9kohe85i36octooiq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
