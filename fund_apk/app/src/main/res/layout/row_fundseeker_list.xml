@@ -18,8 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="200dp"
-        android:minHeight="230dp"
-        android:padding="16dp">
+        android:minHeight="230dp">
 
 
         <TextView
@@ -30,7 +29,6 @@
             android:layout_marginTop="52dp"
             android:layout_marginEnd="16dp"
 
-            android:text="FundSeekerName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -39,13 +37,12 @@
             android:id="@+id/tv_fundSeeker_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="24dp"
             android:paddingBottom="23dp"
-            android:text="address x0hhh"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.202"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="16sp"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            app:layout_constraintEnd_toEndOf="@+id/tv_fundSeeker_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_fundSeeker_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_fundSeeker_name" />
 
 

@@ -7,6 +7,7 @@ import android.transition.Explode
 import android.util.Log
 import android.view.View
 import android.view.Window
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_fund_seeker_list.*
 
 class FundSeekerListActivity : AppCompatActivity() {
     lateinit var CampName:String
-    lateinit var CampAddress:String
+    lateinit var BankAccount:String
     lateinit var FundSeekerAdap:FundSeekerListAdapter
     lateinit var Dataset:ArrayList<FundSeekerRvModel>
 
@@ -28,7 +29,7 @@ class FundSeekerListActivity : AppCompatActivity() {
         // inside your activity (if you did not enable transitions in your theme)
         val db=FirebaseFirestore.getInstance()
         CampName= intent.extras?.get("Campaign").toString()
-        CampAddress= intent.extras?.get("accountFunderCurrent").toString()
+        BankAccount= intent.extras?.get("accountFunderCurrent").toString()
         tv_FundSeekerList_campaign.text=CampName
         Dataset= ArrayList()
 
@@ -37,7 +38,7 @@ class FundSeekerListActivity : AppCompatActivity() {
 
         val lay=StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         rv_fundSeeker_List.layoutManager=lay
-        FundSeekerAdap=FundSeekerListAdapter(this,Dataset)
+        FundSeekerAdap=FundSeekerListAdapter(this,Dataset,BankAccount)
         rv_fundSeeker_List.adapter=FundSeekerAdap
 
         db.collection("CampaignList").addSnapshotListener { querySnapshot, exception ->
@@ -70,7 +71,7 @@ class FundSeekerListActivity : AppCompatActivity() {
 
     fun addFundSeekerCampaign(view: View) {
         val int=Intent(this,AddCampaignActivity::class.java)
-        int.putExtra("account_name",CampAddress)
+        int.putExtra("account_name",BankAccount)
         startActivity(int)
     }
 

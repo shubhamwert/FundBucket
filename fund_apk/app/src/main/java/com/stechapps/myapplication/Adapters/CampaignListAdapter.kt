@@ -38,7 +38,7 @@ class CampaignListAdapter(private val mContext:Context,private val Dataset:Array
         holder.itemView.setOnClickListener {
             val intent= Intent(mContext,FundSeekerListActivity::class.java)
             intent.putExtra("Campaign",Dataset.get(position).CampaignName)
-            intent.putExtra("addressFundSeeker",Dataset.get(position).address)
+            intent.putExtra("accountFunderCurrent",Dataset.get(position).address)
 
 
             startActivity(mContext,intent, Bundle.EMPTY)

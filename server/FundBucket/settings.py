@@ -25,7 +25,7 @@ SECRET_KEY = 'v@0pt9umkf4y68)@vk*flss*2@7wy3jclpwdgbc_@j9=#3cl2d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.43.219']
 
 CSRF_COOKIE_PATH = '/shubham/'
 # Application definition

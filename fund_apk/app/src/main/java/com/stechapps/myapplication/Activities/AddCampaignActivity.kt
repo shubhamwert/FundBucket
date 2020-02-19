@@ -35,13 +35,14 @@ class AddCampaignActivity : AppCompatActivity() {
 
         val j = JsonObject()
         try {
-            j.addProperty("name", ed_add_camp_name.toString())
+            j.addProperty("name", ed_add_camp_name.text.toString())
             j.addProperty("account", currentAcc)
         } catch (e: Exception) {
-            Log.e("MAIN ACTIVITY", "makeCall: $e")
+            Log.e("ADD CAMPAIGN ACTIVITY", "makeCall: $e")
         }
 
-    val p=
+
+
         apiServe.RegisterCampaign(j).enqueue(object : Callback<APIaddressrandom>{
             override fun onFailure(call: Call<APIaddressrandom>, t: Throwable) {
                 Toast.makeText(
@@ -62,7 +63,7 @@ class AddCampaignActivity : AppCompatActivity() {
 
                 m.put("associatedwith",currentAcc)
 
-                db.collection("CampaignList").document(ed_add_camp_address.text.toString()).set(m as Map<String, Any>).addOnSuccessListener {
+                db.collection("CampaignList").document(response.body()?.account!!.toString()).set(m as Map<String, Any>).addOnSuccessListener {
                     Toast.makeText(applicationContext," Now you can contribute to this cause ",Toast.LENGTH_SHORT).show()
                     finish()
                 }.addOnFailureListener {
@@ -72,6 +73,11 @@ class AddCampaignActivity : AppCompatActivity() {
 
             }
         })
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
 }

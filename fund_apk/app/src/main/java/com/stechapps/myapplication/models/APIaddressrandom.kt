@@ -9,5 +9,7 @@ data class APIaddressrandom(
     @SerializedName("response")
     val response: Boolean,
     @SerializedName("name")
-    val name:String
+    val name:String,
+    @SerializedName("description")
+    val descrip:String
 )

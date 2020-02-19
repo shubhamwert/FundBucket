@@ -18,7 +18,7 @@ import com.stechapps.myapplication.models.FundSeekerRvModel
 import kotlinx.android.synthetic.main.row_fundseeker_list.view.*
 import kotlinx.android.synthetic.main.row_prof_campaign_list.view.*
 
-class FundSeekerListAdapter(private val mContext:Context,private val Dataset:ArrayList<FundSeekerRvModel>):RecyclerView.Adapter<FundSeekerListAdapter.FundSeekerViewHolder>() {
+class FundSeekerListAdapter(private val mContext:Context,private val Dataset:ArrayList<FundSeekerRvModel>,private val currentAccount:String):RecyclerView.Adapter<FundSeekerListAdapter.FundSeekerViewHolder>() {
 
     class FundSeekerViewHolder(v:View):RecyclerView.ViewHolder(v){
         var tvFundSeekerName: TextView =v.tv_fundSeeker_name
@@ -41,7 +41,8 @@ class FundSeekerListAdapter(private val mContext:Context,private val Dataset:Arr
         holder.itemView.setOnClickListener {
             val intent= Intent(mContext,FundingActivity::class.java)
             intent.putExtra("Campaign",Dataset.get(position).FundSeeker)
-            intent.putExtra("accountFunderCurrent",Dataset.get(position).address)
+            intent.putExtra("addressContract",Dataset.get(position).address)
+            intent.putExtra("currentAcc",currentAccount)
             ContextCompat.startActivity(mContext, intent, Bundle.EMPTY)
         }
     }

@@ -123,6 +123,7 @@ def CreateCampaign(request):
     global Contract
     Contract=ci.createContract(ContractDetail,"Campaign",fundSeeker.getAcc())
     return JsonResponse({'response':True})
+
 @csrf_exempt
 def CreateFunderForBucket(request):
     js = request.read()

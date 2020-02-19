@@ -19,6 +19,12 @@ interface APIinterface {
 
     @POST("/registerCampaign")
     fun RegisterCampaign(@Body body: JsonObject):Call<APIaddressrandom>
+
+    @POST("/registerFunder")
+    fun RegisterAsFunder(@Body body: JsonObject):Call<APIaddressrandom>
+
+    @POST("/sendMoneyToFundSeeker")
+    fun Donate(@Body body: JsonObject):Call<APIaddressrandom>
     companion object {
         fun create(): APIinterface {
 

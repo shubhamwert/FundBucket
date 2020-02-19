@@ -72,10 +72,12 @@ def sendMoneyToFundSeeker():
     name=request.json['names']
     account=request.json['account']
     ContractAdd=request.json['contract']
+    value=request.json['value']
     Contract=retreiveContract(ContractAdd)
+    print(value)
     Funder=ci.CreateFunder(name,acc=account)
-    [tx,val]=ci.DonateMoney(Contract,Funder)
-    return json.dumps({'response':True,'tx':str(tx),'val':val})
+    [tx,val]=ci.DonateMoney(Contract,Funder,value)
+    return json.dumps({'response':True,'tx':str(tx),'val':str(val)})
 
 @app.route('/startVotingFor',methods=['POST'])
 def startVotingFor():
