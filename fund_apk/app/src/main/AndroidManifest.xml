@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.AddCampaignActivity"></activity>
+        <activity android:name=".Activities.LoginActivity"></activity>
+        <activity android:name=".Activities.AddCampaignActivity" />
         <activity android:name=".Activities.AddNewAccountActivity" />
         <activity android:name=".Activities.FundingActivity" />
         <activity android:name=".Activities.FundSeekerListActivity" />

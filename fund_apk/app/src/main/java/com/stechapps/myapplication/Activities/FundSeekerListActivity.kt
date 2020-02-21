@@ -10,6 +10,7 @@ import android.view.Window
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.stechapps.myapplication.Adapters.FundSeekerListAdapter
 import com.stechapps.myapplication.R

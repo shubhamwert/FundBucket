@@ -37,8 +37,8 @@ class FundingActivity : AppCompatActivity() {
             if(exception != null){
                 return@addSnapshotListener
             }
-
-            current_value= snapshot!!["value"]?.toString()?.toInt()!!
+            if(snapshot?.get("value") !=null)
+                current_value= snapshot["value"]?.toString()?.toInt()!!
 
             pb_fund_collected.setProgress(current_value.toInt(),true)
             pb_funding_wait.visibility=View.GONE

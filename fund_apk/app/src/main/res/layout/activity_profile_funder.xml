@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.ProfileFunder"
+    android:background="#DDD"
     >
 
     <androidx.cardview.widget.CardView
@@ -59,6 +60,18 @@
         app:layout_constraintStart_toStartOf="parent"
         android:onClick="addCampaign"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:id="@+id/img_log_out"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toEndOf="@+id/imgprofileMain"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logout"
+        android:onClick="signOut"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

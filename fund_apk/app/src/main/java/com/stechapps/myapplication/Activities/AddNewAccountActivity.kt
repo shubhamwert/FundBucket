@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.stechapps.myapplication.Api.APIinterface
 import com.stechapps.myapplication.R
@@ -51,7 +52,7 @@ lateinit var db:FirebaseFirestore
                     m.put("account", response.body()!!.account)
 
                     m.put("name",ed_new_acc_name.text.toString())
-                    db.collection("Accounts").document(ed_new_acc_name.text.toString()).set(m as Map<String, Any>)
+                    db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid.toString()).collection("Accounts").document(ed_new_acc_name.text.toString()).set(m as Map<String, Any>)
                         .addOnSuccessListener {
                             Toast.makeText(applicationContext," You are ready to except money ",Toast.LENGTH_SHORT).show()
 

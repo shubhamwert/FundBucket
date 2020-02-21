@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.stechapps.myapplication.Adapters.CampaignListAdapter
 import com.stechapps.myapplication.Api.APIinterface
@@ -23,12 +24,21 @@ class ProfileFunder : AppCompatActivity() {
     val apiServe by lazy {
         APIinterface.create()
     }
-
+    val mAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
     lateinit var FunderDataSet: ArrayList<CampaignsRvModel>
     lateinit var CampaignAdapter: CampaignListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_funder)
+        mAuth.addAuthStateListener {
+            if(mAuth.currentUser==null){
+                startActivity(Intent(this,LoginActivity::class.java))
+                finish()
+            }
+        else{
+
         val call = apiServe.checkConnectivity().enqueue(object : Callback1<FunderApiModel> {
             override fun onFailure(call: Call<FunderApiModel>, t: Throwable) {
                 Log.d("<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>", "$t")
@@ -42,13 +52,14 @@ class ProfileFunder : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Connected to Server ", Toast.LENGTH_SHORT)
                         .show()
                     initFunder()
-
+                    val x="${mAuth.currentUser?.email.toString()} \n ${mAuth.currentUser?.uid?.slice(IntRange(0,12))} ..."
+                    tv_prof_description.text=x
                 }
             }
-        })
+        })}
 
 
-    }
+    }}
 
 
     fun initFunder() {
@@ -64,7 +75,7 @@ class ProfileFunder : AppCompatActivity() {
         val ll = LinearLayoutManager(this)
         rv_CampaignList.layoutManager = ll
         rv_CampaignList.adapter = CampaignAdapter
-        db.collection("Accounts")
+        db.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid.toString()).collection("Accounts")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (firebaseFirestoreException!=null){
 
@@ -86,6 +97,11 @@ class ProfileFunder : AppCompatActivity() {
 
     fun addCampaign(view: View) {
         startActivity(Intent(this,AddNewAccountActivity::class.java))
+    }
+
+    fun signOut(view: View) {
+
+        mAuth.signOut()
     }
 
 

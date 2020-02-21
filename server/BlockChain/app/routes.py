@@ -130,11 +130,14 @@ def getCurrentFundingStageFor():
     Contract=retreiveContract(ContractAdd)
     Funder=ci.CreateFunder(name,acc=account)
     p=ci.getCurrentFundingStageFor(Contract,Funder)
-    return p
+    return json.dumps({
+        'response':True,
+        'Stage':p
+    })
 
 @app.route('/getRandomAddress',methods=['GET'])
 def getRandAddress():
-    i=randint(0,len(web3.eth.accounts))
+    i=randint(0,len(web3.eth.accounts)-1)
     print(web3.eth.accounts[i])
     return json.dumps({'response':True,'account':web3.eth.accounts[i]})
 
